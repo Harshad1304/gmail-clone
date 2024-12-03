@@ -1,5 +1,7 @@
 import React from 'react';
 import './EmailList.css';
+import Section from './Section.jsx';
+import EmailRow from './EmailRow.jsx'
 import { IconButton, Checkbox } from '@mui/material';
 import {
   ArrowDropDown,
@@ -10,6 +12,9 @@ import {
   KeyboardHide as KeyboardHideIcon,
   Settings as SettingsIcon
 } from '@mui/icons-material';
+import InboxIcon from '@mui/icons-material/Inbox';
+import PeopleIcon from '@mui/icons-material/People'; // Added import
+import LocalOfferIcon from '@mui/icons-material/LocalOffer'; // Added import
 
 function EmailList() {
   return (
@@ -42,6 +47,15 @@ function EmailList() {
           </IconButton>
         </div>
       </div>
+      <div className="email-list-section">
+          <Section Icon={InboxIcon} title='primary' color='red' selected />
+          <Section Icon={PeopleIcon} title='Social' color='#1A73E8' />
+          <Section Icon={LocalOfferIcon} title='Promotions' color='green' />
+        </div>
+        <div className="email-list-rows">
+          <EmailRow title="Youtube" subject="Hello From Youtube" description="This is a test" time="10:00pm"/>
+          <EmailRow title="Youtube" subject="Hello From Youtube" description="This is a test" time="10:12pm"/>
+        </div>
     </div>
   );
 }

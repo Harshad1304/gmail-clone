@@ -4,6 +4,7 @@ import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar.jsx';
 import Mail from './components/Mail/Mail.jsx';
 import EmailList from './components/EmailList/EmailList.jsx';
+import SendMail from './components/SendMail/SendMail.jsx';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<EmailList />} />
           </Routes>
         </div>
+        <SendMail />
       </div>
     </Router>
   );
