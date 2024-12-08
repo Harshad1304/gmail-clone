@@ -60,9 +60,10 @@
 }
 
 .send-mail-error{
-    background-color: whitesmoke;
-    font-size: 13px;
-    padding: 10px;
+    background-color: white;
+    /* font-size: 13    px; */
+    padding: 2px;
+    text-align: right;
     color: red;
 
 }

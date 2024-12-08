@@ -3,21 +3,34 @@ import './SendMail.css'
 import { Close as CloseIcon } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { useForm } from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { closeSendMessage } from '../../features/mailSlice';
+import { db } from '../../firebase/firebase';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
 
 function SendMail() {
     const {register, handleSubmit, watch, formState: { errors }} = useForm();
     const onSubmit = (formData)=>{
         console.log(formData)
-        
-    }
+        const emailCollection = collection(db,"emails")
+        addDoc(emailCollection,{
+            to:formData.to,
+            subject:formData.subject,
+            message:formData.message,
+            timeStamp:serverTimestamp(),
+        })
+    dispatch(closeSendMessage())  
+    };
+
+    const dispatch = useDispatch()
   return (
     <div className='send-mail'>
         <div className="mail-header">
             <h3>New Message</h3>
-            <CloseIcon  className="mail-close-icon"/>
+            <CloseIcon onClick={()=>dispatch(closeSendMessage())} className="mail-close-icon"/>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
-            <input name='to' placeholder='To  :-' type="text" {...register('to',{required:true})} />
+            <input name='to'  placeholder='To  :-' type="email" {...register('to',{required:true})} />
 
             {errors.to && <p className="send-mail-error">To is required</p>}
 

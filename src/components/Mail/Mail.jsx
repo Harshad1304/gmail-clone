@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Mail.css";
 import { IconButton } from "@mui/material";
 import {
@@ -16,9 +16,30 @@ import {
   ExitToApp as ExitToAppIcon,
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Mail() {
     const navigate = useNavigate()
+    const mailData = useSelector((state)=>state.mail.selectedMail)
+    console.log(mailData)
+
+    useEffect(()=>{
+        if(mailData){
+            localStorage.setItem('selectedMail', JSON.stringify(mailData))
+        }
+    },[mailData])
+
+    const [savedMail, setSavedMail] = useState(null);
+    
+    useEffect(()=>{
+        const mail = localStorage.getItem('selectedMail'); //saved mail in localstorage
+        if(mail){
+            setSavedMail(JSON.parse(mail));
+        }
+    },[])
+
+    const displayMail = mailData || savedMail;
+
   return (
     <div className="mail">
       <div className="mail-tools">
@@ -65,13 +86,13 @@ function Mail() {
       </div>
       <div className="mail-body">
         <div className="mail-body-header">
-            <h2>Subject</h2>
+            <h2>{displayMail?.subject}</h2>
             <LabelImportantIcon className="mail-important-icon" />
-            <p>Title</p>
-            <p className="mail-time">10:00 PM</p>
+            <p>{displayMail?.title}</p>
+            <p className="mail-time">{displayMail?.timeStamp}</p>
         </div>
         <div className="mail-message">
-            <p>This is a message</p>
+            <p>{displayMail?.description}</p>
         </div>
       </div>
     </div>
